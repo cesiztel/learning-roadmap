@@ -386,3 +386,4 @@ Playground project:
 
 - First GraphQL API: https://dev.to/augani/how-to-build-a-graphql-api-from-scratch-19c0
 - Learn fundamentals: https://www.howtographql.com/basics/2-core-concepts/
+- GraphQL Org Learn resouces: https://graphql.org/learn
