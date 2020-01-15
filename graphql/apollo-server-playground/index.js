@@ -4,8 +4,16 @@ const universe = require('./universe');
 const starWarsUniverse = universe.buildUniverse();
 
 const typeDefs = gql`
+  enum Episode {
+    NEWHOPE
+    EMPIRE
+    JEDI
+  }
+
   type Character {
     name: String!
+    age: Int
+    appearsIn: [Episode]
   }
 
   type Query {
