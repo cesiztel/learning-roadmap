@@ -10,10 +10,26 @@ const typeDefs = gql`
     JEDI
   }
 
-  type Character {
+  interface Character {
     name: String!
     age: Int
     appearsIn: [Episode]
+    friends: [Character]
+  }
+
+  type Human implements Character {
+    name: String!
+    age: Int
+    appearsIn: [Episode]
+    friends: [Character]
+  }
+  
+  type Droid implements Character {
+    name: String!
+    age: Int
+    appearsIn: [Episode]
+    friends: [Character]
+    skills: [String]!
   }
 
   type Query {
@@ -28,6 +44,19 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
+  Character: {
+    __resolveType(character, context, info){
+		  if(character.type == "Human" || character.type == "Jedi" || character.type == "Sith") {
+			  return 'Human';
+		  }
+	
+		  if(character.type == "Droid") {
+			  return 'Droid';
+		  }
+	
+		  return null;
+		},
+  },
   Query: {
     hero: heroQuery,
     villian: villianQuery,
