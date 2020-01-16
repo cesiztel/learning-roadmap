@@ -18,6 +18,8 @@ const typeDefs = gql`
 
   type Query {
     hero: [Character]!
+    villian: [Character]!
+    allCharacters: [Character]!
   }
 
   schema {
@@ -27,12 +29,22 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hero: heroQuery
+    hero: heroQuery,
+    villian: villianQuery,
+    allCharacters: allCharactersQuery
   }
 };
 
 function heroQuery() {
 	return starWarsUniverse.filter(singleCharacter => singleCharacter.hero == true);
+}
+
+function villianQuery() {
+  return starWarsUniverse.filter(singleCharacter => singleCharacter.hero == false);
+}
+
+function allCharactersQuery() {
+  return starWarsUniverse;
 }
 
 const server = new ApolloServer({ typeDefs, resolvers });
