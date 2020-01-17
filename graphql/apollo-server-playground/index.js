@@ -4,6 +4,8 @@ const universe = require('./universe');
 const starWarsUniverse = universe.buildUniverse();
 
 const typeDefs = gql`
+  union Heros = Droid | Jedi
+
   enum Episode {
     NEWHOPE
     EMPIRE
@@ -23,6 +25,13 @@ const typeDefs = gql`
     appearsIn: [Episode]
     friends: [Character]
   }
+
+  type Jedi implements Character {
+    name: String!
+    age: Int
+    appearsIn: [Episode]
+    friends: [Character]
+  }
   
   type Droid implements Character {
     name: String!
@@ -36,6 +45,7 @@ const typeDefs = gql`
     hero: [Character]!
     villian: [Character]!
     allCharacters: [Character]!
+    searchHeros(text: String): [Heros]
   }
 
   schema {
@@ -44,6 +54,19 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
+  Heros: {
+    __resolveType(character, context, info){
+		  if(character.type == "Jedi") {
+			  return 'Jedi';
+		  }
+	
+		  if(character.type == "Droid") {
+			  return 'Droid';
+		  }
+	
+		  return null;
+		},
+  },
   Character: {
     __resolveType(character, context, info){
 		  if(character.type == "Human" || character.type == "Jedi" || character.type == "Sith") {
@@ -60,7 +83,8 @@ const resolvers = {
   Query: {
     hero: heroQuery,
     villian: villianQuery,
-    allCharacters: allCharactersQuery
+    allCharacters: allCharactersQuery,
+    searchHeros: searchHeros
   }
 };
 
@@ -74,6 +98,12 @@ function villianQuery() {
 
 function allCharactersQuery() {
   return starWarsUniverse;
+}
+
+function searchHeros(root, args, context) {
+  return heroQuery()
+    .filter(singleCharacter => singleCharacter.name.toLocaleLowerCase().includes(args.text) == true)
+    .filter(singleCharacter => singleCharacter.type != "Human");
 }
 
 const server = new ApolloServer({ typeDefs, resolvers });
