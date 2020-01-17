@@ -41,6 +41,14 @@ const typeDefs = gql`
     skills: [String]!
   }
 
+  input JediInput {
+    name: String!
+  }
+
+  type Mutation {
+    createJedi(input: JediInput!): Jedi
+  }
+
   type Query {
     hero: [Character]!
     villian: [Character]!
@@ -50,6 +58,7 @@ const typeDefs = gql`
 
   schema {
     query: Query
+    mutation: Mutation
   }
 `;
 
@@ -84,7 +93,10 @@ const resolvers = {
     hero: heroQuery,
     villian: villianQuery,
     allCharacters: allCharactersQuery,
-    searchHeros: searchHeros
+    searchHeros: searchHeros,
+  },
+  Mutation: {
+    createJedi: createJedi
   }
 };
 
@@ -104,6 +116,19 @@ function searchHeros(root, args, context) {
   return heroQuery()
     .filter(singleCharacter => singleCharacter.name.toLocaleLowerCase().includes(args.text) == true)
     .filter(singleCharacter => singleCharacter.type != "Human");
+}
+
+function createJedi(root, args, context) {
+  var newJedi = { 
+    name: args.input.name, 
+    type: "Jedi", 
+    appearsIn: ["NEWHOPE", "EMPIRE", "JEDI"], 
+    hero: true
+  };
+
+  starWarsUniverse.push(newJedi);
+
+  return newJedi;
 }
 
 const server = new ApolloServer({ typeDefs, resolvers });
