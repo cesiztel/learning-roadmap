@@ -35,6 +35,56 @@ So the main resource I used is the [Developer Roadmap](https://github.com/kamran
 - [ ] CSS
 - [ ] Javascript
 
+### OS and general knowdledge
+
+- [ ] Terminal Usage
+- [ ] How OS work in general
+- [ ] Process management
+- [ ] Threads and Concurrency
+- [ ] Basic Terminal Command
+- [ ] Memory management
+- [ ] Interprocess Communication
+- [ ] I/O Management
+- [ ] POSIX Basics
+- [ ] Basic network concepts
+
+### Programming languages
+
+- [ ] Java
+- [ ] C#
+- [ ] PHP
+- [ ] Rust
+- [ ] Go
+- [ ] Python
+- [ ] Javascript
+
+### Version control System
+
+- [ ] Basic usage of Git
+- [ ] Advance usage of Git
+- [ ] How is build internally
+
+### Relational databases
+
+- [ ] MySQL
+- [ ] MS SQL
+
+### NoSQL databases
+
+- [ ] DynamoDB
+
+### More about databases
+
+- [ ] ORM's
+- [ ] ACID
+- [ ] Transactions
+- [ ] N+1 Problem
+- [ ] Database normalization
+- [ ] Indexes and how they work
+- [ ] Data Replication
+- [ ] Sharding Strategies
+- [ ] CAP Theorem
+
 ## Sofware engineering fundamentals.
 
 ## Open university.
