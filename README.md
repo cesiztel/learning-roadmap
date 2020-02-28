@@ -91,6 +91,10 @@ So the main resource I used is the [Developer Roadmap](https://github.com/kamran
 
 ## Pragmatic learning.
 
+### Certifications.
+
+- [ ] (AWS Cloud Practicioner certification.)[/cerfifications/README.md] (In progress 🏃🏾)  
+
 ## Experiments & free learning
 
 ## Talks, pet projects and others.
