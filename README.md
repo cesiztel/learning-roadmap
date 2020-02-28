@@ -93,7 +93,7 @@ So the main resource I used is the [Developer Roadmap](https://github.com/kamran
 
 ### Certifications.
 
-- [ ] [AWS Cloud Practicioner certification.](/cerfifications/README.md) (In progress 🏃🏾)  
+- [ ] [AWS Cloud Practicioner certification.](/certifications/README.md) (In progress 🏃🏾)  
 
 ## Experiments & free learning
 
