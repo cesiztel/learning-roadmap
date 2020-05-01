@@ -1,8 +1,6 @@
-# 👨‍🏫 Certifications
+# 👨‍🏫 Cloud Certifications
 
-## AWS Cloud Practicioner certification
-
-### Resources
+## Learning resources
 
 - [A cloud guru](https://acloud.guru/)
 - [Linux academy](https://linuxacademy.com/)

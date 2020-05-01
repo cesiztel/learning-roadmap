@@ -1,100 +1,31 @@
 # 👨‍🏫 Learning roadmap
 
-This is my software engineering learning roadmap. Here I will upload notes, code and a roadmap of all the things I am learning or I want to learn. This roadmap is made by me being aware of my own way of learning and my preferences. 
+This is my software engineering learning roadmap. Here I will upload notes, code and roadmaps about all the things I am currently learning or I want to learn. This content repository is based on my own way of learning and my preferences. 
 
-If you are interested in the material that I push here, please be aware of the following things:
+If you are interested in the material that I push here, take in consideration the following things:
 
-- This is design by me. Dedication and progress will be up to me, so it will be at my own pace. 
-- I do not expect contributions directly to my learning roadmap, but if you want to contribute with notes, add new programs, please feel free to create new PR's. 
+- This is design by me.  
+- I do not expect contributions directly to this learning repository, but if you want to contribute with notes, resources, add new programs, please feel free to create new PR's or fork the project and make your own thing out of it.
 - I am always open for discussions and suggestions, but due to this is really personal trip, I would like to experience myself and make my own mistake besides the opinions of other people. So, please do not get offended if I do not follow your suggestions.
 
 I think you can get benefit from this repository basically in two ways: fork/clone/download the project and create your own roadmap or just visit all the resources that I will be pushing. 
 
 Happy learning!
 
-# 🚵🏿‍♂️ Roadmap
+# Topics
 
-## Backend development.
+## Programming language
 
-This is my main career development right now. So, for me is really important to understand subjects proper specifically from backend development. For this area of my knowledge I thought to set up a guide which includes more practical topics.
+- [C#](/c#)
 
-So the main resource I used is the [Developer Roadmap](https://github.com/kamranahmedse/developer-roadmap) build by @kamranahmedse
+## Containers
 
-### Internet
+- [Docker](/docker#)
 
-- [ ] How does the internet work?
-- [ ] What is HTPP?
-- [ ] Browsers and how they work?
-- [ ] DNS and how it works?
-- [ ] What is Domain Name?
-- [ ] What is hosting?
+## API
 
-### Basic Frontend knowledge
+- [GraphQL](/graphql)
 
-- [ ] HTML
-- [ ] CSS
-- [ ] Javascript
+## Certifications
 
-### OS and general knowdledge
-
-- [ ] Terminal Usage
-- [ ] How OS work in general
-- [ ] Process management
-- [ ] Threads and Concurrency
-- [ ] Basic Terminal Command
-- [ ] Memory management
-- [ ] Interprocess Communication
-- [ ] I/O Management
-- [ ] POSIX Basics
-- [ ] Basic network concepts
-
-### Programming languages
-
-- [ ] Java
-- [ ] C#
-- [ ] PHP
-- [ ] Rust
-- [ ] Go
-- [ ] Python
-- [ ] Javascript
-
-### Version control System
-
-- [ ] Basic usage of Git
-- [ ] Advance usage of Git
-- [ ] How is build internally
-
-### Relational databases
-
-- [ ] MySQL
-- [ ] MS SQL
-
-### NoSQL databases
-
-- [ ] DynamoDB
-
-### More about databases
-
-- [ ] ORM's
-- [ ] ACID
-- [ ] Transactions
-- [ ] N+1 Problem
-- [ ] Database normalization
-- [ ] Indexes and how they work
-- [ ] Data Replication
-- [ ] Sharding Strategies
-- [ ] CAP Theorem
-
-## Sofware engineering fundamentals.
-
-## Open university.
-
-## Pragmatic learning.
-
-### Certifications.
-
-- [ ] [AWS Cloud Practicioner certification.](/certifications/README.md) (In progress 🏃🏾)  
-
-## Experiments & free learning
-
-## Talks, pet projects and others.
+- [Cloud certificatiosn (AWS, Azure)](/certifications/cloudcertifications.md)
