@@ -14,6 +14,21 @@ Happy learning!
 
 # Topics
 
+## Computer Science foundations
+
+- [Computer Science](/computerscience)
+
+### Data Structure and Algorithmos
+
+#### Material
+
+Courses:
+
+- [Data Structures and Algorithms: Deep Dive Using Java](https://www.udemy.com/course/data-structures-and-algorithms-deep-dive-using-java/)
+
+    Notes:
+    - [Course notes & code](/computerscience/datastructuresandalgorithms)
+
 ## Programming language
 
 - [C#](/c#)
