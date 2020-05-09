@@ -20,7 +20,8 @@ Resources:
       Code:
         ZipFile: |
           exports.handler = (event, context, callback) => {
-             callback(null, "Hello, " + event.user.name + "!");
+             callback(null, "Hello, " + event.user.name + "!. Thanks for buying in our shops." +
+              "Your total invoice amount is " + event.order.total + " euros. Enjoy!");
           };
       Runtime: "nodejs12.x"
       Timeout: "25"
@@ -40,7 +41,37 @@ Resources:
 
             callback(null, { 
               data: {
-                user: user
+                user: user,
+                oderId: event.orderId
+              }
+            });
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+  
+  OrderDataFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            let user = event.user;
+            let order = {
+              id: event.orderId,
+              products: [ 
+                { id: 2222, name: "almond milk", quantity: 2, price: 20 },
+                { id: 2223, name: "broccoli", quantity: 1, price: 1 },
+                { id: 2224, name: "tomatoes", quantity: 5, price: 5 }
+              ],
+              total: 26
+            };
+
+            callback(null, { 
+              data: {
+                user: user,
+                order: order
               }
             });
           };
@@ -83,6 +114,12 @@ Resources:
                   "Type": "Task",
                   "Resource": "${userLambdaArn}",
                   "OutputPath": "$.data",
+                  "Next": "AddOrder"
+                },
+                "AddOrder": {
+                  "Type": "Task",
+                  "Resource": "${orderLambdaArn}",
+                  "OutputPath": "$.data",
                   "Next": "HelloWorld"
                 },
                 "HelloWorld": {
@@ -92,5 +129,5 @@ Resources:
                 }
               }
             }
-          - {lambdaArn: !GetAtt [ MyLambdaFunction, Arn ], userLambdaArn: !GetAtt [ UserDataFunction, Arn ]}
+          - {lambdaArn: !GetAtt [ MyLambdaFunction, Arn ], userLambdaArn: !GetAtt [ UserDataFunction, Arn ], orderLambdaArn: !GetAtt [ OrderDataFunction, Arn ]}
       RoleArn: !GetAtt [ StatesExecutionRole, Arn ]
