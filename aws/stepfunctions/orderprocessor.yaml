@@ -20,8 +20,22 @@ Resources:
       Code:
         ZipFile: |
           exports.handler = (event, context, callback) => {
-             callback(null, "Hello, " + event.user.name + "!. Thanks for buying in our shops." +
-              "Your total invoice amount is " + event.order.total + " euros. Enjoy!");
+            let user = event.user;
+            let products = event.order.products;
+            var total = 0;
+            var totalDiscount = 0;
+            for (product of products) {
+              if (typeof product.discount !== "undefined")
+              {
+                totalDiscount += product.discount;
+                total += product.price - product.discount;
+              } else {
+                total += product.price;
+              }
+            }
+            
+            callback(null, "Hello, " + user.name + "!. Thanks for buying in our shops." +
+              "Your total invoice amount is " + total + " euros (applied " + totalDiscount + " euros discount). Enjoy!");
           };
       Runtime: "nodejs12.x"
       Timeout: "25"
@@ -42,13 +56,14 @@ Resources:
             callback(null, { 
               data: {
                 user: user,
-                oderId: event.orderId
+                oderId: event.orderId,
+                channel: event.channel
               }
             });
           };
       Runtime: "nodejs12.x"
       Timeout: "25"
-  
+
   OrderDataFunction:
     Type: "AWS::Lambda::Function"
     Properties:
@@ -57,23 +72,42 @@ Resources:
       Code:
         ZipFile: |
           exports.handler = (event, context, callback) => {
-            let user = event.user;
             let order = {
               id: event.orderId,
               products: [ 
                 { id: 2222, name: "almond milk", quantity: 2, price: 20 },
                 { id: 2223, name: "broccoli", quantity: 1, price: 1 },
                 { id: 2224, name: "tomatoes", quantity: 5, price: 5 }
-              ],
-              total: 26
+              ]
             };
 
             callback(null, { 
               data: {
-                user: user,
-                order: order
+                user: event.user,
+                order: order,
+                channel: event.channel
               }
             });
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+  
+  ApplyDiscountsFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            var product = event;
+            if (product.id == 2222) 
+              product.discount = 5;
+          
+            if (product.id == 2224) 
+              product.discount = 1;
+
+            callback(null, product);
           };
       Runtime: "nodejs12.x"
       Timeout: "25"
@@ -120,14 +154,48 @@ Resources:
                   "Type": "Task",
                   "Resource": "${orderLambdaArn}",
                   "OutputPath": "$.data",
-                  "Next": "HelloWorld"
+                  "Next": "ApplyDiscounts"
                 },
-                "HelloWorld": {
+                "ApplyDiscounts": {
+                  "Type": "Map",
+                  "InputPath": "$.order",
+                  "ItemsPath": "$.products",
+                  "MaxConcurrency": 0,
+                  "Iterator": {
+                    "StartAt": "ApplyDiscount",
+                    "States": {
+                      "ApplyDiscount": {
+                        "Type": "Task",
+                        "Resource": "${applyDiscountLambdaArn}",
+                        "End": true
+                      }
+                    }
+                  },
+                  "ResultPath": "$.order.products",
+                  "Next": "ChannelTypeChoice"
+                },
+                "ChannelTypeChoice": {
+                  "Type": "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.channel",
+                      "StringEquals": "sms",
+                      "Next": "SendInvoiceBySMS"
+                    }
+                  ],
+                  "Default": "SendInvoiceByEmail"
+                },
+                "SendInvoiceBySMS": {
+                  "Type": "Task",
+                  "Resource": "${lambdaArn}",
+                  "End": true
+                },
+                "SendInvoiceByEmail": {
                   "Type": "Task",
                   "Resource": "${lambdaArn}",
                   "End": true
                 }
               }
             }
-          - {lambdaArn: !GetAtt [ MyLambdaFunction, Arn ], userLambdaArn: !GetAtt [ UserDataFunction, Arn ], orderLambdaArn: !GetAtt [ OrderDataFunction, Arn ]}
+          - {lambdaArn: !GetAtt [ MyLambdaFunction, Arn ], userLambdaArn: !GetAtt [ UserDataFunction, Arn ], orderLambdaArn: !GetAtt [ OrderDataFunction, Arn ], applyDiscountLambdaArn: !GetAtt [ ApplyDiscountsFunction, Arn ]}
       RoleArn: !GetAtt [ StatesExecutionRole, Arn ]
