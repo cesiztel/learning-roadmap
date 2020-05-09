@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "An example template with an IAM role for a Lambda state machine."
+Description: "Process shopping order using AWS Step Functions."
 Resources:
   LambdaExecutionRole:
     Type: "AWS::IAM::Role"
@@ -141,7 +141,7 @@ Resources:
         !Sub
           - |-
             {
-              "Comment": "A Hello World example of the Amazon States Language using an AWS Lambda function",
+              "Comment": "Process shopping order state machine",
               "StartAt": "AddUser",
               "States": {
                 "AddUser": {
