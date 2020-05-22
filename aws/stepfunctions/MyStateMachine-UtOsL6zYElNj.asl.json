@@ -1,0 +1,21 @@
+{
+  "Comment": "Process shopping order state machine",
+  "StartAt": "AttachBrand",
+  "States": {
+    "AttachBrand": {
+      "Type": "Pass",
+      "Result": {
+        "brandId": 20,
+        "name": "nl"
+      },
+      "ResultPath": "$.brand",
+      "Next": "AddUser"
+    },
+    "AddUser": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:eu-west-2:756525791342:function:shoppingprocessor-v1-UserDataFunction-T6FMWOIB8735",
+      "OutputPath": "$.data",
+      "End": true
+    }
+  }
+}
