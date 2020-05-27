@@ -1,0 +1,248 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Process shopping order using AWS Step Functions."
+Resources:
+  LambdaExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+
+  MyLambdaFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            let user = event.profile[0].user;
+            let products = event.order.products;
+            var total = 0;
+            var totalDiscount = 0;
+            for (product of products) {
+              if (typeof product.discount !== "undefined")
+              {
+                totalDiscount += product.discount;
+                total += product.price - product.discount;
+              } else {
+                total += product.price;
+              }
+            }
+            
+            callback(null, "Hello, " + user.name + "!. Thanks for buying in our shops." +
+              "Your total invoice amount is " + total + " euros (applied " + totalDiscount + " euros discount). Enjoy!");
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+
+  UserDataFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            let user = {
+              id: event.userId,
+              name: "John"
+            };
+
+            callback(null, {
+              data: {
+                user: user
+              }
+            });
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+
+  CustomerInformationFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            let customer = {
+              id: 343632823,
+              userId: event.userId,
+              paymentMethod: {
+                id: 347474,
+                name: "creditCard",
+                valid: true
+              }
+            };
+
+            callback(null, {
+              data: {
+                customer: customer
+              }
+            });
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+
+  OrderDataFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            let order = {
+              id: event.orderId,
+              products: [ 
+                { id: 2222, name: "almond milk", quantity: 2, price: 20 },
+                { id: 2223, name: "broccoli", quantity: 1, price: 1 },
+                { id: 2224, name: "tomatoes", quantity: 5, price: 5 }
+              ]
+            };
+
+            callback(null, { 
+              profile: event.profile,
+              order: order,
+              channel: event.channel
+            });
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+  
+  ApplyDiscountsFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: "index.handler"
+      Role: !GetAtt [ LambdaExecutionRole, Arn ]
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+            var product = event;
+            if (product.id == 2222) 
+              product.discount = 5;
+          
+            if (product.id == 2224) 
+              product.discount = 1;
+
+            callback(null, product);
+          };
+      Runtime: "nodejs12.x"
+      Timeout: "25"
+
+  StatesExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub states.${AWS::Region}.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: "*"
+
+  MyStateMachine:
+    Type: "AWS::StepFunctions::StateMachine"
+    Properties:
+      DefinitionString:
+        !Sub
+          - |-
+            {
+              "Comment": "Process shopping order state machine",
+              "StartAt": "AddProfile",
+              "States": {
+                "AddProfile": {
+                  "Type": "Parallel",
+                  "Branches": [
+                    {
+                      "StartAt": "AddUserDetails",
+                      "States": {
+                        "AddUserDetails": {
+                          "Type": "Task",
+                          "Resource": "${userDetailsLambdaArn}",
+                          "InputPath": "$.userId",
+                          "OutputPath": "$.data",
+                          "End": true
+                        }
+                      }
+                    },
+                    {
+                      "StartAt": "AddCustomerInformation",
+                      "States": {
+                        "AddCustomerInformation": {
+                          "Type": "Task",
+                          "Resource": "${customerInfoLambdaArn}",
+                          "InputPath": "$.userId",
+                          "OutputPath": "$.data",
+                          "End": true
+                        }
+                      }
+                    }
+                  ],
+                  "ResultPath": "$.profile",
+                  "Next": "AddOrder"
+                },
+                "AddOrder": {
+                  "Type": "Task",
+                  "Resource": "${orderLambdaArn}",
+                  "Next": "ApplyDiscounts"
+                },
+                "ApplyDiscounts": {
+                  "Type": "Map",
+                  "InputPath": "$.order",
+                  "ItemsPath": "$.products",
+                  "MaxConcurrency": 0,
+                  "Iterator": {
+                    "StartAt": "ApplyDiscount",
+                    "States": {
+                      "ApplyDiscount": {
+                        "Type": "Task",
+                        "Resource": "${applyDiscountLambdaArn}",
+                        "End": true
+                      }
+                    }
+                  },
+                  "ResultPath": "$.order.products",
+                  "Next": "ChannelTypeChoice"
+                },
+                "ChannelTypeChoice": {
+                  "Type": "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.channel",
+                      "StringEquals": "sms",
+                      "Next": "SendInvoiceBySMS"
+                    }
+                  ],
+                  "Default": "SendInvoiceByEmail"
+                },
+                "SendInvoiceBySMS": {
+                  "Type": "Task",
+                  "Resource": "${lambdaArn}",
+                  "End": true
+                },
+                "SendInvoiceByEmail": {
+                  "Type": "Task",
+                  "Resource": "${lambdaArn}",
+                  "End": true
+                }
+              }
+            }
+          - {lambdaArn: !GetAtt [ MyLambdaFunction, Arn ], customerInfoLambdaArn: !GetAtt [ CustomerInformationFunction, Arn ], userDetailsLambdaArn: !GetAtt [ UserDataFunction, Arn ], orderLambdaArn: !GetAtt [ OrderDataFunction, Arn ], applyDiscountLambdaArn: !GetAtt [ ApplyDiscountsFunction, Arn ]}
+      RoleArn: !GetAtt [ StatesExecutionRole, Arn ]
