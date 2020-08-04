@@ -1,8 +1,8 @@
 {
   "Comment": "Process shopping order state machine",
-  "StartAt": "AddUserInfo",
+  "StartAt": "AddProfile",
   "States": {
-    "AddUserInfo": {
+    "AddProfile": {
       "Type": "Parallel",
       "Branches": [
         {
@@ -11,6 +11,7 @@
             "AddUserDetails": {
               "Type": "Task",
               "Resource": "arn:aws:lambda:eu-west-2:756525791342:function:orderprocessor-parallel-UserDataFunction-R5O9GC0KGENV",
+              "InputPath": "$.userId",
               "OutputPath": "$.data",
               "End": true
             }
@@ -22,19 +23,19 @@
             "AddCustomerInformation": {
               "Type": "Task",
               "Resource": "arn:aws:lambda:eu-west-2:756525791342:function:orderprocessor-parallel-CustomerInformationFunctio-9DIXO8ZXM0SO",
+              "InputPath": "$.userId",
               "OutputPath": "$.data",
               "End": true
             }
           }
         }
       ],
-      "OutputPath": "$.data",
+      "ResultPath": "$.profile",
       "Next": "AddOrder"
     },
     "AddOrder": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:eu-west-2:756525791342:function:orderprocessor-parallel-OrderDataFunction-1SHKIWEL8O6TJ",
-      "OutputPath": "$.data",
       "Next": "ApplyDiscounts"
     },
     "ApplyDiscounts": {
