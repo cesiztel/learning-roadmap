@@ -56,7 +56,21 @@ Happy learning!
 
 ## Computer Science foundations
 
-- [Computer Science](/computerscience)
+### Programming 
+
+I decided go over coding fundamentals and prepare myself like I went to a coding interviews. But because I do not have a coding interview ahead I can stop in some concepts, because other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time which is a improvement. 
+
+I based my learning in this book:
+
+- [Problem Solving in Data Structures & Algorithms Using C#: Programming Interview Guide](https://www.amazon.com/Problem-Solving-Structures-Algorithms-Using/dp/1540407306) by Hemant Jain
+
+This book is amazing because goes over most of the programming fundamentals that I would like to review or lean better. During the study of this books I was taking notes and the exercices are going to be found in [1_coding_exercises](/1_coding_exercises). On this folder I've created a .NET Core solution with a test project and a main project. So I can create tests of all my exercises without the need to actually running in a client application. In every exercise is possible that I will explain myself some related concepts because I would like to practice about explaining things. Also I would like that serve as guide for other started programmers to review in a practical way concepts.
+
+Here the list of exercises:
+
+| Topic  | Exercise                                                                                        |   |   |   |
+|--------|-------------------------------------------------------------------------------------------------|---|---|---|
+| Arrays | [Sum the elements of an Array (SumArray.cs)](/1_coding_exercises/src/CodingExercises/Basics/)   |   |   |   |
 
 ### Data Structure and Algorithmos
 
