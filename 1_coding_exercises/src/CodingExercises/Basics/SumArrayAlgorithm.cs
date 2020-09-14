@@ -1,6 +1,6 @@
 namespace CodingExercises.Basics
 {
-    public static class SumArray
+    public static class SumArrayAlgorithm
     {
         /// <summary>
         /// Take the array [1, 1, 1]
@@ -23,7 +23,7 @@ namespace CodingExercises.Basics
         /// </summary>
         /// <param name="inputArray"></param>
         /// <returns></returns>
-        public static int Sum(int[] inputArray)
+        public static int SumArray(int[] inputArray)
         {
             int totalSum = 0;
 
@@ -35,7 +35,7 @@ namespace CodingExercises.Basics
             return totalSum;
         }
 
-        public static int SumVariation(int[] inputArray)
+        public static int SumArrayVariation(int[] inputArray)
         {
             int totalSum = 0;
 

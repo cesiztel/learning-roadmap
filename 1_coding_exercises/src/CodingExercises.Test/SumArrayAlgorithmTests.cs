@@ -10,9 +10,9 @@ namespace CodingExercises.Test
         public void GivenACorrectArrayTheSumIsCorrectTest()
         {
             int expectedSumResult = 5;
-
             int[] myArray = new int[] {1, 1, 1, 1, 1}; 
-            var sumResult = SumArray.Sum(myArray);
+
+            var sumResult = SumArrayAlgorithm.SumArray(myArray);
 
             Assert.Equal(sumResult, expectedSumResult);
         }
@@ -21,9 +21,9 @@ namespace CodingExercises.Test
         public void GivenACorrectArrayTheSumVariationIsCorrectTest()
         {
             int expectedSumResult = 5;
-
             int[] myArray = new int[] { 1, 1, 1, 1, 1 };
-            var sumResult = SumArray.SumVariation(myArray);
+            
+            var sumResult = SumArrayAlgorithm.SumArrayVariation(myArray);
 
             Assert.Equal(sumResult, expectedSumResult);
         }

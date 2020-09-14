@@ -58,7 +58,7 @@ Happy learning!
 
 ### Programming 
 
-I decided go over coding fundamentals and prepare myself like I went to a coding interviews. But because I do not have a coding interview ahead I can stop in some concepts, because other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time which is a improvement. 
+I decided go over coding fundamentals and prepare myself like if I have to do a coding interviews. But because I do not have a coding interview ahead, I can slow my learning down and stop in concepts that I think are really important to learn and understand deeply. Other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time which is a improvement. 
 
 I based my learning in this book:
 
@@ -68,9 +68,10 @@ This book is amazing because goes over most of the programming fundamentals that
 
 Here the list of exercises:
 
-| Topic  | Exercise                                                                                        |   |   |   |
-|--------|-------------------------------------------------------------------------------------------------|---|---|---|
-| Arrays | [Sum the elements of an Array (SumArray.cs)](/1_coding_exercises/src/CodingExercises/Basics/)   |   |   |   |
+| Topic     | Exercise                                                                                        |   |   |   |
+|-----------|-------------------------------------------------------------------------------------------------|---|---|---|
+| Arrays    | [Sum the elements of an Array](/1_coding_exercises/src/CodingExercises/Basics/)                 |   |   |   |
+| Searching | [Sequential search](/1_coding_exercises/src/CodingExercises/Basics/)                            |   |   |   |
 
 ### Data Structure and Algorithmos
 
