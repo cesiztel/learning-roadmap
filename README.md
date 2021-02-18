@@ -1,21 +1,18 @@
 # 👨‍🏫 Learning roadmap
 
-This is my software engineering learning roadmap. Here I will upload notes, code and roadmaps about all the things I am currently learning or I want to learn. This content repository is based on my own way of learning and my preferences. 
+This is my software engineering learning roadmap. Here I will upload learning material, code exercises and experiments doing while learning. The content pushed is based on my own way of learning and my personal preferences. 
 
-If you are interested in the material that I push here, take in consideration the following things:
+Please, take in account following aspects while checking the content:
  
-- I do not expect contributions directly to this learning repository, but if you want to contribute with notes, resources, add new programs, please feel free to create new PR's or fork the project and make your own roadmap thing out of it.
-- I am always open for discussions and suggestions, but due to this is really personal trip, I would like to experience myself and make my own mistake besides the opinions of other people. So, please do not get offended if I do not follow your suggestions.
-
 I think you can get benefit from this repository basically in two ways: 
-- Fork/clone/download the project and create your own roadmap.
-- Just visit all the resources that I will push on this repository. 
+- Direct contributions are not expected. If you want to contribute, consider the following ways: create new PR's or fork the project and make your own roadmap thing out of it.
+- Read the content, think about it yourself, experiment and finally put it in practice. 
 
 # 💪 Learning techniques.
 
-Over the years I was thinking a lot about learning, reading about how to learn and techniques that could offer me a new ways of learning. Here I would like to share some of the techniques and thoughts that collected.
+Over the years I've been thinking and reading a lot about learning and how to learn. I would like to share some of the techniques that I collected.
 
-1. Start with why you really want to learn a new skill.
+1. Start with "why" you really want to learn a new skill. Some questions you can answer for yourself:
     - What am I curious about? And what would I like to understand better?
     - How would I like to challenge myself by learning something new?
     - What is important to me about learning X,Y,Z?
@@ -25,9 +22,9 @@ Over the years I was thinking a lot about learning, reading about how to learn a
     - How does learning X, Y, Z help me to feel more in control of choices I make around my work / my environment / other aspects of my life?
     - How might my accomplishments in learning X, Y, Z be recognized by others?
 
-2. Set clear learning goals about what you're planning to learn using S.M.A.R.T goals technique
+2. Set clear learning goals about what you're planning to learn using S.M.A.R.T goals technique:
     - S  ⇒ can be explained in one sentence
-    - M ⇒ easily measurable.
+    - M  ⇒ easily measurable.
     - A  ⇒ low the bar. Build up the habit.
     - R  ⇒ relevant link with "why".
     - T  ⇒ timely. Try to split if it's too big. In weeks? 4-week plan. 8-weeks plan.
@@ -58,31 +55,11 @@ Happy learning!
 
 ### Programming 
 
-I decided go over coding fundamentals and prepare myself like if I have to do a coding interviews. But because I do not have a coding interview ahead, I can slow my learning down and stop in concepts that I think are really important to learn and understand deeply. Other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time which is a improvement. 
+I decided go over coding fundamentals and prepare myself like if I have to do a coding interviews. I do not have a coding interview ahead, so I can slow my learning down and stop in concepts that I think are really important to learn and understand deeply. Other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time.
 
-I based my learning in this book:
+🦾 Goals for programming:
 
-- [Problem Solving in Data Structures & Algorithms Using C#: Programming Interview Guide](https://www.amazon.com/Problem-Solving-Structures-Algorithms-Using/dp/1540407306) by Hemant Jain
-
-This book is amazing because goes over most of the programming fundamentals that I would like to review or lean better. During the study of this books I was taking notes and the exercices are going to be found in [1_coding_exercises](/1_coding_exercises). On this folder I've created a .NET Core solution with a test project and a main project. So I can create tests of all my exercises without the need to actually running in a client application. In every exercise is possible that I will explain myself some related concepts because I would like to practice about explaining things. Also I would like that serve as guide for other started programmers to review in a practical way concepts.
-
-Here the list of exercises:
-
-| Topic     | Exercise                                                                                        |   |   |   |
-|-----------|-------------------------------------------------------------------------------------------------|---|---|---|
-| Arrays    | [Sum the elements of an Array](/1_coding_exercises/src/CodingExercises/Basics/)                 |   |   |   |
-| Searching | [Sequential search](/1_coding_exercises/src/CodingExercises/Basics/)                            |   |   |   |
-
-### Data Structure and Algorithmos
-
-#### Material
-
-Courses:
-
-- [Data Structures and Algorithms: Deep Dive Using Java](https://www.udemy.com/course/data-structures-and-algorithms-deep-dive-using-java/)
-
-    Notes:
-    - [Course notes & code](/computerscience/datastructuresandalgorithms)
+- [ ] Read the first 3 Chapters of the book: [Structure and Interpretation of Computer Programs](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html)
 
 ## Programming language
 
@@ -90,12 +67,15 @@ Courses:
 
 ## Containers
 
-- [Docker](/docker#)
+- [Docker commands](/containers/docker/COMMANDS.md). Collection of useful commands for docker.
 
 ## API
 
-- [GraphQL](/graphql)
+- [GraphQL initial tutorial](/api/graphql/README.md). Introduction tutorial explaining basic concepts of GraphQL
 
-## Certifications
+## AWS
 
-- [Cloud certificatiosn (AWS, Azure)](/certifications/cloudcertifications.md)
+### AWS Step Functions
+
+- [AWS Step Functions sample](/aws/stepfunctions). Sample about how to use AWS Step Functions
+- [How to: AWS Step Functions and Amazon State Language](https://cesarcodecrafter.com/step-functions-and-state-language/). Article that I wrote about AWS Step Functions.
