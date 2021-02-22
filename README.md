@@ -75,6 +75,8 @@ I decided go over coding fundamentals and prepare myself like if I have to do a 
 
 ## AWS
 
+- [ ] AWS Developer Associate Certification
+
 ### AWS Step Functions
 
 - [AWS Step Functions sample](/aws/stepfunctions). Sample about how to use AWS Step Functions
