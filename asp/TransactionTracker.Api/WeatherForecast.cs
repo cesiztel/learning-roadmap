@@ -1,6 +1,6 @@
 using System;
 
-namespace TodoApi
+namespace TransactionTracker.Api
 {
     public class WeatherForecast
     {
