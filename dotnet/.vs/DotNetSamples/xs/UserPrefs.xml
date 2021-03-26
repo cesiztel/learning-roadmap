@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{5D9E6545-2DD6-4700-8434-D75155951DAC}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="PetStore/Controllers/PetController.cs">
+    <Files>
+      <File FileName="PetStore/Controllers/WeatherForecastController.cs" Line="8" Column="20" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DotNetSamples" expanded="True">
+            <Node name="PetStore" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Properties" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.PetStore PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
