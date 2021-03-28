@@ -7,7 +7,7 @@ namespace MediatorPatternWithMediatR.GetTodoItem
 {
     public class GetTodoItemHandler : IRequestHandler<GetTodoItemRequest, Item>
     {
-        public static List<Item> items = new List<Item>
+        private static readonly List<Item> Items = new List<Item>
         {
             new Item { Id = 1, Name = "Go to grocery", Finished = false },
             new Item { Id = 2, Name = "Clean the house", Finished = false }
@@ -17,7 +17,7 @@ namespace MediatorPatternWithMediatR.GetTodoItem
         {
             Item foundItem = null;
 
-            foreach (var item in items)
+            foreach (var item in Items)
             {
                 if (item.Id == request.Id)
                 {
