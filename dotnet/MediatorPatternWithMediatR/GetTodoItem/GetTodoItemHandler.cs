@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatorPatternWithMediatR.Exceptions;
 using MediatR;
 
 namespace MediatorPatternWithMediatR.GetTodoItem
@@ -25,6 +26,11 @@ namespace MediatorPatternWithMediatR.GetTodoItem
 
                     break;
                 }
+            }
+
+            if (foundItem == null)
+            {
+                throw new ResourceNotFoundException();
             }
 
             return Task.FromResult(foundItem);  

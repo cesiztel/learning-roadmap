@@ -14,5 +14,6 @@
   <ItemGroup>
     <Folder Include="GetTodoItem\" />
     <Folder Include="GroupUserNotification\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>

@@ -17,10 +17,9 @@ namespace MediatorPatternWithMediatR
             var mediator = serviceProvider.GetService<IMediator>();
 
             // Mediator send request to handler
-            var response = mediator.Send(new GetTodoItemRequest { Id = 1, Source = "Android" });
+            var response = mediator.Send(new GetTodoItemRequest { Id = -1, Source = "Android" }); // put -1 to throw an exception
 
-            Console.WriteLine(response.Result == null ?
-                "No items found" : response.Result.ToString());
+            Console.WriteLine(response.Result.ToString());
 
             // Mediator spread the message to other objects
             mediator.Publish(new Message { Body = "Tonight we go to the cinema." });
