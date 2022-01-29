@@ -1,0 +1,20 @@
+.Counter {
+    background-color: #61dafb;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    color: #282c34;
+    font-size: 32px;
+    font-weight: bold;
+    border: transparent;
+}
+
+.Counter:hover {
+    background-color: #61dafb;
+    cursor: pointer;
+}
+
+.Counter:active {
+    background-color: #56c8e7;
+    transform: translateY(2px);
+}
