@@ -1,3 +1,68 @@
+## Bit of history
+
+React was first created by Jordan Walke, a software engineer at Facebook. It was incorporated into Facebook’s newsfeed in 2011 and later on Instagram when it was acquired by Facebook in 2012. At JSConf 2013, React was made open source, and it joined the crowded category of UI libraries like jQuery, Angular, Dojo, Meteor, and others. At that time, React was described as “the V in MVC.”
+
+React was billed as a library: concerned with implementing a specific set of features, not providing a tool for every use case.
+
+```
+React.createElement(type, props, [arguments])
+```
+
+Any element that has an HTML class attribute is using className for that property instead of class. Since class is a reserved word in JavaScript, we have to use className to define the class attribute of an HTML element.
+
+When we build a list of child elements by iterating through an array, React likes each of those elements to have a key property. The key property is used by React to help it update the DOM efficiently.
+
+```
+const bakedSalmonIngredients = React.createElement(
+  "ul",
+  { className: "ingredients " },
+  items.map((ingredient, i) =>
+    React.createElement("li", { key: i }, ingredient)
+  )
+);
+```
+
+## JSX
+
+```
+React Element     React.createElement(IngredientsList, { list: [...] });
+                                            |              |
+     JSX                             <IngredientsList list={[...]}/>
+```
+
+## React Fragments
+
+```
+function Cat({ name }) {
+  return (
+    <> // fragment to surround the siblings
+      <h1>The cat's name is {name}</h1>
+      <p>He's good.</h1>
+    </>
+  )
+}
+
+ReactDOM.render(
+  <Cat name="Jungle" />,
+  document.getElementById("root")
+);
+```
+
+## Webpack
+
+Webpack is billed as a module bundler. A module bundler takes all of our different files (Javascript, LESS, CSS, JSX, ESNext and so on) and turns them into a single file. The two main benefits of bundling are `modularity` and `network performance`.
+
+Modularity will allow you to break down your source code into parts, or modules, that are easier to work with, especially in a team environment.
+
+Network performance is gained by only needing to load one dependency in the browser: the bundle. Each `script` tag makes an HTTP request, and there's latency penalty for each HTTP request. Bundling all the dependecies into a single file allows you to load everything with one HTTP request, thereby avoiding additional latency
+
+Also can handle:
+
+- Code splitting
+- Minification
+- Feature Flagging
+- Hot Module Replacement (HMR)
+
 ## 📝 Your Notes
 
 Normally an interactive application will need to hold state somewhere. In React,
@@ -18,11 +83,12 @@ your component to the DOM. It accepts a callback function which React will call 
 
 ```javascript
 React.useEffect(() => {
-    // your side-effect code here.
-    // .. you can make an update based on HTTP request or interact with
-    // browser API
-})
+  // your side-effect code here.
+  // .. you can make an update based on HTTP request or interact with
+  // browser API
+});
 ```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
