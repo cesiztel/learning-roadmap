@@ -1,0 +1,11 @@
+service: hosterproject
+
+provider:
+  name: aws
+
+resources:
+  Resources:
+    MyBucketUploader:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: myhosteruploaderbucket

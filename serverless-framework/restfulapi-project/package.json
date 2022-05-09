@@ -1,0 +1,16 @@
+{
+  "name": "restfulapi-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1130.0",
+    "serverless-webpack": "^5.7.0",
+    "webpack": "^5.72.0"
+  }
+}

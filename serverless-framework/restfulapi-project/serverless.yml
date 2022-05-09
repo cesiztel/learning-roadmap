@@ -1,0 +1,68 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+# Serverless.yml is the configuration the CLI
+# uses to deploy your code to your provider of choice
+
+# The `service` block is the name of the service
+service: restfulapi-project
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-2
+  environment:
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: '*'
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+custom:
+  tableName: users
+
+functions:
+  getUser:
+    handler: lambdas/controllers/getUser.handler
+    events:
+      - http:
+          path: users/{ID}
+          method: GET
+          cors: true
+  getUsers:
+    handler: lambdas/controllers/getUsers.handler
+    events:
+      - http:
+          path: users/
+          method: GET
+          cors: true
+  createUser:
+    handler: lambdas/controllers/createUser.handler
+    events:
+      - http:
+          path: users/
+          method: POST
+          cors: true
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

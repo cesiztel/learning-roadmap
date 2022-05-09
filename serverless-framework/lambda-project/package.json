@@ -1,0 +1,14 @@
+{
+  "name": "serverless-framework",
+  "version": "1.0.0",
+  "description": "- Deploy application",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
