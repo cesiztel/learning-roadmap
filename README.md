@@ -56,18 +56,6 @@ Happy learning!
 
 ## September 2022
 
-🦾 Goals for programming: Learn Python
-
-# Topics
-
-## Computer Science foundations
-
-### Programming
-
-I decided go over coding fundamentals and prepare myself like if I have to do a coding interviews. I do not have a coding interview ahead, so I can slow my learning down and stop in concepts that I think are really important to learn and understand deeply. Other of my goals is try to explain coding concepts in plain words. Being aware of my limitations for the abstract thinking I want to make myself the way to improve this aspect describing computer science concepts in really simple way or at least as simple as possible. I want to obtain a better understanding of certain concepts and I believe that when you understand a concept truly sticks in your memory more time.
-
-## September 2022
-
 ### Goal: Learn Python, from novice to practioner
 
 - [ ] Read and practice entire book: [Python Crash Course](https://www.amazon.com/Python-Crash-Course-2nd-Edition/dp/1593279280)
