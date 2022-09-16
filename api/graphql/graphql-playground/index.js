@@ -1,21 +1,29 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { ANDIs } = require("./andis");
+const { Aletta, Dekker } = require("./aletta");
 
 const schemaDefs = gql`
+  type Squad {
+    name: String # Scalar
+    lead: ANDI # Object
+    members: [ANDI] # List of objects
+  }
+
   type ANDI {
     name: String
     role: String
     ANDtitle: String
   }
 
-  type Query {
-    club: [ANDI]
+  type Query { # Top level entry point
+    aletta: [Squad]
+    dekker: [Squad]
   }
 `;
 
 const resolvers = {
   Query: {
-    club: () => ANDIs,
+    aletta: () => Aletta,
+    dekker: () => Dekker,
   },
 };
 
