@@ -31,7 +31,7 @@ const ANDIs = [
   },
   {
     name: "Kaarline",
-    role: "Chief Executive Officer",
+    role: "People lover",
     ANDtitle: "people lover",
     level: null,
   },
@@ -77,7 +77,7 @@ const AND = {
         {
           name: "Aletta",
           executive: ANDIs.find((andi) => andi.name === "Maaike"),
-          peoplelead: ANDIs.find((andi) => andi.name === "Karlinee"),
+          peoplelead: ANDIs.find((andi) => andi.name === "Kaarline"),
           squads: [
             {
               name: "Squad1",

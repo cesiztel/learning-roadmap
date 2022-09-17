@@ -43,8 +43,11 @@ const schemaDefs = gql`
     level: Level
   }
 
+  union SearchResult = Hub | Club
+
   type Query { # Top level entry point for reads
     AND: AND
+    searchByName(contains: String): [SearchResult]
   }
 `;
 
@@ -58,8 +61,34 @@ const resolvers = {
     L5_1: "L5.1",
     L6: "L6",
   },
+  SearchResult: {
+    __resolveType(obj, context, info) {
+      if (obj.peoplelead) {
+        return "Club";
+      }
+
+      return "Hub";
+    },
+  },
   Query: {
     AND: () => AND,
+    searchByName: (parent, args, context, info) => {
+      const keyword = args.contains;
+      results = [];
+      AND.hubs.forEach((hub) => {
+        if (hub.name.includes(keyword)) {
+          results.push(hub);
+        }
+
+        hub.clubs.forEach((club) => {
+          if (club.name.includes(keyword)) {
+            results.push(club);
+          }
+        });
+      });
+
+      return results;
+    },
   },
 };
 
