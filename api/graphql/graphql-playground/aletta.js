@@ -3,11 +3,13 @@ const ANDIs = [
     name: "Tom Pope",
     role: "Product Developer",
     ANDtitle: "GraphQL lover",
+    level: "L3.1",
   },
   {
     name: "Evelyn",
     role: "UX Principal",
     ANDtitle: "Design lover",
+    level: "L6",
   },
 ];
 
@@ -28,6 +30,7 @@ const Dekker = [
         name: "John Wick",
         role: "Product Analyst",
         ANDtitle: "Killing lover",
+        level: "L3.1",
       },
     ],
   },
