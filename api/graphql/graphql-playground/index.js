@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { Aletta, Dekker } = require("./aletta");
+const { ANDIs, AND } = require("./and");
 
 const schemaDefs = gql`
   enum Level {
@@ -8,13 +8,26 @@ const schemaDefs = gql`
     L2_1
     L2_2
     L3_1
+    L5_1
     L6
   }
 
-  type PracticeGroup {
+  type AND {
+    ceo: ANDI
+    hubs: [Hub]
+  }
+
+  type Hub {
     name: String
-    lead: ANDI
-    members: [ANDI]
+    executive: ANDI
+    clubs: [Club]
+  }
+
+  type Club {
+    name: String
+    executive: ANDI
+    peoplelead: ANDI
+    squads: [Squad]
   }
 
   type Squad {
@@ -31,8 +44,7 @@ const schemaDefs = gql`
   }
 
   type Query { # Top level entry point for reads
-    aletta: [Squad]
-    dekker: [Squad]
+    AND: AND
   }
 `;
 
@@ -43,11 +55,11 @@ const resolvers = {
     L2_1: "L2.1",
     L2_2: "L2.2",
     L3_1: "L3.1",
+    L5_1: "L5.1",
     L6: "L6",
   },
   Query: {
-    aletta: () => Aletta,
-    dekker: () => Dekker,
+    AND: () => AND,
   },
 };
 
