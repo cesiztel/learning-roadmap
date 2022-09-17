@@ -109,5 +109,32 @@ const AND = {
   ],
 };
 
+const books = [
+  {
+    title: "This is a query language",
+    author: {
+      name: "asdajsdada",
+    },
+    courses: [
+      {
+        name: "course of the graphql",
+      },
+      {
+        name: "course of the x",
+      },
+    ],
+    date: new Date(),
+  },
+  {
+    title: "This is another query",
+    author: {
+      name: "eghjskadfhg",
+    },
+    colors: ["red", "green"],
+    date: new Date(),
+  },
+];
+
 exports.ANDIs = ANDIs;
 exports.AND = AND;
+exports.books = books;

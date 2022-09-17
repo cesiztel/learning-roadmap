@@ -1,7 +1,55 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { ANDIs, AND } = require("./and");
+const { ANDIs, AND, books } = require("./and");
+const { GraphQLScalarType, Kind, parseValue } = require("graphql");
+
+const dateScalar = new GraphQLScalarType({
+  name: "Date",
+  description: "Date custom scalar type",
+  serialize(value) {
+    return value.getTime(); // Convert outgoing Date to integer for JSON
+  },
+  parseValue(value) {
+    return new Date(value); // Convert incoming integer to Date
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then Date
+    }
+    return null; // Invalid hard-coded value (not an integer)
+  },
+});
 
 const schemaDefs = gql`
+  scalar Date
+
+  interface Book {
+    title: String!
+    author: Author! @deprecated(reason: "Use 'newField'.")
+    date: Date!
+  }
+
+  type Author {
+    name: String
+  }
+
+  type Course {
+    name: String
+  }
+
+  type Textbook implements Book {
+    title: String!
+    author: Author!
+    date: Date!
+    courses: [Course!]!
+  }
+
+  type ColoringBook implements Book {
+    title: String!
+    author: Author!
+    date: Date!
+    colors: [String!]!
+  }
+
   enum Level {
     L1_1
     L1_2
@@ -45,9 +93,30 @@ const schemaDefs = gql`
 
   union SearchResult = Hub | Club
 
+  fragment UnitDetails on Hub {
+    name: String
+    executive: ANDI
+  }
+
+  input ClubInput {
+    name: String
+  }
+
+  input JoinerInput {
+    name: String
+    role: String
+    ANDtitle: String
+    level: Level
+  }
+
   type Query { # Top level entry point for reads
     AND: AND
     searchByName(contains: String): [SearchResult]
+    books: [Book!]!
+  }
+
+  type Mutation {
+    newJoiner(club: ClubInput, joiner: JoinerInput): ANDI
   }
 `;
 
@@ -61,6 +130,7 @@ const resolvers = {
     L5_1: "L5.1",
     L6: "L6",
   },
+  Date: dateScalar,
   SearchResult: {
     __resolveType(obj, context, info) {
       if (obj.peoplelead) {
@@ -68,6 +138,19 @@ const resolvers = {
       }
 
       return "Hub";
+    },
+  },
+  Book: {
+    __resolveType(book, context, info) {
+      if (book.courses) {
+        return "Textbook";
+      }
+
+      if (book.colors) {
+        return "ColoringBook";
+      }
+
+      return null;
     },
   },
   Query: {
@@ -89,6 +172,13 @@ const resolvers = {
 
       return results;
     },
+    books: () => books,
+  },
+  Mutation: {
+    newJoiner: (parent, args, context, info) => {
+      console.log(JSON.stringify(args));
+      // Add to database or service
+    },
   },
 };
 
@@ -100,3 +190,11 @@ const server = new ApolloServer({
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
 });
+
+/*
+    mutation AddNewANDI($c: ClubInput, $j: JoinerInput) {
+    newJoiner(club: $c, joiner: $j) {
+        name
+    }
+    }
+*/
