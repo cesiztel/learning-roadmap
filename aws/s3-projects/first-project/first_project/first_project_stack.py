@@ -38,7 +38,7 @@ class FirstProjectStack(Stack):
                 ),
                 s3.Transition(
                     storage_class=s3.StorageClass.GLACIER,
-                    transition_after=Duration.days(3)
+                    transition_after=Duration.days(91)
                 )
             ]
         )
