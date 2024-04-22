@@ -7,3 +7,4 @@ faiss-cpu>=1.7,<2
 pypdf>=3.8,<4
 datasets
 langchain_community
+ipywidgets==7.7.1
