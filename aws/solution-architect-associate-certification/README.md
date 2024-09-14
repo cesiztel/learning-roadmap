@@ -80,30 +80,35 @@ Because once their password, access key, or secret key is set, these credentials
 
 **Project: Manage users, groups and test permissions and access.**
 
-1.- Create user called john-doe
-2.- Create user called maria-doe
-3.- Create user called tester-doe
+1. Create user called john-doe.
+2. Create user called maria-doe
+3. Create user called tester-doe
+
 Practice to create the user without access to the console and only programmatic access. Configure
-the user profiles in your computer to run commands. Install the AWS CLI
-4.- Create 2 groups: Admins, Testers.
-5.- Create an S3 bucket on the region configure on the profile. Should be unique name.
-6.- Run the following commands using any of the created users (via profile)
+the user profiles in your computer to run commands. Install the AWS CLI.
+
+4. Create 2 groups: Admins, Testers.
+5. Create an S3 bucket on the region configure on the profile.Should be unique name.
+6. Run the following commands using any of the created users (via profile)
 
 ```bash
 aws s3 ls --profile=john-doe
 ```
 All the execution should return access denied with any of the profiles.
-7.- Add to the testers group the managed policy `AmazonS3ReadOnlyAccess`. This will be read only permissions but will prevent to that group CUD actions on the bucket.
-8.- Add the user tester-doe to that group and run again the command:
+
+7. Add to the testers group the managed policy `AmazonS3ReadOnlyAccess`. This will be read only permissions but will prevent to that group CUD actions on the bucket.
+8. Add the user tester-doe to that group and run again the command:
 ```bash
 aws s3 ls --profile=tester-doe
 ```
 As result the list of buckets should be listed. Other user will give the denied error.
-9.- Using the tester doe, try to copy a file to the bucket using the following:
+
+9. Using the tester doe, try to copy a file to the bucket using the following:
 ```bash
 aws s3 cp ./file_to_upload_to_s3.txt s3://[name_of_the_bucket_you_use] --profile=tester-doe
 ```
 The access should be denied for this operations.
-10.- Add to the admin group, john and maria. And now add the permissions `AmazonS3FullAccess`
-11.- Try to run the command with the profile of john or maria. It will work.
-12.- To finish the project: Delete the users, the groups, users, the local profiles and the S3 bucket (before you will need to empty it)
+
+10. Add to the admin group, john and maria. And now add the permissions `AmazonS3FullAccess`
+11. Try to run the command with the profile of john or maria. It will work.
+12. To finish the project: Delete the users, the groups, users, the local profiles and the S3 bucket (before you will need to empty it)
