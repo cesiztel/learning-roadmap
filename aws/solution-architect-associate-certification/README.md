@@ -7,6 +7,7 @@ This repository contains resources, links to documentation and blogs post and le
 ## Table of Contents
 
  1. [Identity and Access Management](#identity-and-access-management)
+ 2. [Simple Storage Service](#s3)
 
 ## Identity and Access Management
 
@@ -112,3 +113,45 @@ The access should be denied for this operations.
 10. Add to the admin group, john and maria. And now add the permissions `AmazonS3FullAccess`
 11. Try to run the command with the profile of john or maria. It will work.
 12. To finish the project: Delete the users, the groups, users, the local profiles and the S3 bucket (before you will need to empty it)
+
+## Simple Storage Service
+
+### Basics
+
+- Object-Based storage.
+- Cannot be used to run an operating system or database.
+- Unlimited Storage
+  - Object up to [0 bytes to 5TB] in Size.
+- Object store on buckets.
+- Main fetures:
+  - Tiered Storage
+  - Lifecycle Management -> move objects to cheaper tiers or delete them based on rules
+  - Versioning
+- Strong (Read-After-Write) Consistency.
+ 
+### Secure tha data
+- Buckets are private by default.
+3 main methods:
+  - Server-Side Encryption
+  - ACL's -> individual objects with a bucket.
+  - Bucket policies
+
+### Buckets basics
+- Buckets use Universal Namespace (the name of the bucket should be globally unique)
+
+Bucket url formats:
+```
+https://[bucket-name].s3.[region].amazonaws.com/[key-name]
+```
+
+### Object basics
+- Object attributes:
+  - Key
+  - Value
+  - Version ID
+  - Metadata
+ 
+### S3 Tiers
+- S3 Standard
+  - 99.99% availability and 99.9s% durability
+  - Use cases: design for frequent;y accessed data.
