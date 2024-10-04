@@ -125,7 +125,7 @@ The access should be denied for this operations.
 - Object store on buckets.
 - Main fetures:
   - Tiered Storage
-  - Lifecycle Management -> move objects to cheaper tiers or delete them based on rules
+  - Lifecycle Management -> move objects to cheaper tiers or delete them based on rules. Can be combined with versioning.
   - Versioning
 - Strong (Read-After-Write) Consistency.
  
@@ -150,8 +150,53 @@ https://[bucket-name].s3.[region].amazonaws.com/[key-name]
   - Value
   - Version ID
   - Metadata
- 
+
 ### S3 Tiers
-- S3 Standard
-  - 99.99% availability and 99.9s% durability
-  - Use cases: design for frequent;y accessed data.
+- *S3 Standard*
+  - 99.99% availability and 99.9s% durability. >=3 AZ replication
+  - Use cases: design for frequently accessed data.
+- *S3 Standard Infrequent Access (Standard-IA)*
+  - Use case: less frenquently access but rapid access
+  - You pay to access the data (per-GB retrieval)
+  - Use case: backups, data store for disaster recovery files.
+- *S3 One Zone-Infrequent Access*
+  - Cost 20% less than standard IA
+  - Use case: great for long-lived, infrequently accessed, non-critical data.
+- *S3 Intelligen Tiering*
+  - Use case: unknown access patterns.
+- *Glacier*
+  - You pay each time you access your data.
+  - Use cases: archiving data
+  - Tiers:
+    - Glacier Instant Retrieval / Glacier
+    - Glacier Flexible Retrieval. Retrieval time can be minutes or up to 12 hours
+    - Glacier Deep Archive. Cheapest tier. Long term storage. Retrieval time is 12 hours to 48 hours.  
+
+### Versions
+
+- Even if you enable the public access to the whole bucket, this applies only to the most current version of the objects. 
+If you have versioning enable, then other version does not have public access.
+- When version is on, you do not delete the object, you mark the object with the "Delete marker" (includes all the versions).
+You can restore the object, deleting the "Delete marker".
+- Once the versioning is enabled, can not be disabled, only can be suspended.
+- How to protect the objects on a bucket of actual deletion?
+  1. Enable versioning.
+  2. Activate MFA.
+
+### S3 Object Lock
+
+You can use S3 Obejct Lock to store objects using a write once, read many (WORM) model. It can help prevent
+objects from being deleted or modified for a fixed amount of time or indefinitely.
+Two models:
+- *Governance Mode*: Only some users have special permissions to overrite or delete an object version or alter its settings.
+- *Compliance Mode*: A protected object version can't be overwritten or deleted by any user during the retention period. 
+
+After the retention perior expires, the object version can be overwritten or deleted unless you also placed a *legal hold* on the object version. It's like a retention period that prevents to overrite or delete the version but it has not time, so you need to delete the legal hold first.
+
+### Glacier Vault Lock:
+Easily deploy and enforce compliance controls for individual S3 Glacier vaults with a vault lock policy. Apply WORM to Gaclier.
+
+### Projects
+
+- [Tutorial: Hosting on-demand streaming video with Amazon S3, Amazon CloudFront, and Amazon Route 53](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tutorial-s3-cloudfront-route53-video-streaming.html)
+
