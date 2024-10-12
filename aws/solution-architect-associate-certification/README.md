@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository contains resources, links to documentation and blogs post and learning projects which I did during the preparation for the AWS-SAA certification exam. 
+This repository contains learning projects which I did during the preparation for the AWS-SAA certification exam. 
 
 ## Table of Contents
 
@@ -10,72 +10,6 @@ This repository contains resources, links to documentation and blogs post and le
  2. [Simple Storage Service](#s3)
 
 ## Identity and Access Management
-
-IAM is a global service
-
-### Building blocks of IAM
-
-- **Users**: A physical person (one per user). Do not share users.
-- **Groups**: functions as administration, developer. Contains users.
-- **Roles**: Delegation permissions
-- **IAM Policy documents**: assign permissions declaring in a JSON document
-
-You can assign policy documents to Groups, Users and Roles.
-
-Best practices is assigned documents to Groups instead of Users, because is harder to maintain if you do individually.
-
-- The principle of least privilege: Only assign a user the minimum amount of privileges they need to do their job.
-
-### Connecticting to IdP (Identity Provider)
-
-Supported provider types:
-- SAML
-- OpenID Connect
-
-### Securing root account
-
-- In this link can be found the [root user best practices for your AWS Account](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html#ru-bp-secure)
-
-Summary:
-- Activate MFA.
-- Do not share the root user password
-- Do not store the root user password on dependent AWS services.
-- Do not create access keys for the root user.
-
-### Using IAM Policy Documents
-
-- Official AWS documentation for this [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html)
-
-Example of policy document:
-
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "*",
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-Explanation of the document schema. If it's not specified the field as Optional, means that the field is mandatory:
-
-- **Version**: Specify the version of the policy language that you want to use. Recommended `2012-10-17`.
-- **Statement**: Use this main policy element as a container for the following elements. You can include more than one statement in a policy.
-- **Sid** (Optional) – Include an optional statement ID to differentiate between your statements.
-- **Effect** – Use Allow or Deny to indicate whether the policy allows or denies access.
-- **Principal** (Required in only some circumstances) - If it's create a resource based policy then is required to indicate the identity which you would like to allow or deny. If the policy is attached to a user or role, then it's implied, because who assume that policy is itself.
-- **Action** – Include a list of actions that the policy allows or denies.
-- **Resource** (Required in only some circumstances) – If you create an IAM permissions policy, you must specify a list of resources to which the actions apply. If you create a resource-based policy, this element is optional. If you do not include this element, then the resource to which the action applies is the resource to which the policy is attached.
-- **Condition** (Optional) – Specify the circumstances under which the policy grants permission.
-
-### Quiz questions
-
-- Why are IAM users considered "permanent" users?
-Because once their password, access key, or secret key is set, these credentials don't automatically rotate or change without human interaction. For the password, you need to set the rotation policy yourself.
 
 ### Projects
 
@@ -115,86 +49,6 @@ The access should be denied for this operations.
 12. To finish the project: Delete the users, the groups, users, the local profiles and the S3 bucket (before you will need to empty it)
 
 ## Simple Storage Service
-
-### Basics
-
-- Object-Based storage.
-- Cannot be used to run an operating system or database.
-- Unlimited Storage
-  - Object up to [0 bytes to 5TB] in Size.
-- Object store on buckets.
-- Main fetures:
-  - Tiered Storage
-  - Lifecycle Management -> move objects to cheaper tiers or delete them based on rules. Can be combined with versioning.
-  - Versioning
-- Strong (Read-After-Write) Consistency.
- 
-### Secure tha data
-- Buckets are private by default.
-3 main methods:
-  - Server-Side Encryption
-  - ACL's -> individual objects with a bucket.
-  - Bucket policies
-
-### Buckets basics
-- Buckets use Universal Namespace (the name of the bucket should be globally unique)
-
-Bucket url formats:
-```
-https://[bucket-name].s3.[region].amazonaws.com/[key-name]
-```
-
-### Object basics
-- Object attributes:
-  - Key
-  - Value
-  - Version ID
-  - Metadata
-
-### S3 Tiers
-- *S3 Standard*
-  - 99.99% availability and 99.9s% durability. >=3 AZ replication
-  - Use cases: design for frequently accessed data.
-- *S3 Standard Infrequent Access (Standard-IA)*
-  - Use case: less frenquently access but rapid access
-  - You pay to access the data (per-GB retrieval)
-  - Use case: backups, data store for disaster recovery files.
-- *S3 One Zone-Infrequent Access*
-  - Cost 20% less than standard IA
-  - Use case: great for long-lived, infrequently accessed, non-critical data.
-- *S3 Intelligen Tiering*
-  - Use case: unknown access patterns.
-- *Glacier*
-  - You pay each time you access your data.
-  - Use cases: archiving data
-  - Tiers:
-    - Glacier Instant Retrieval / Glacier
-    - Glacier Flexible Retrieval. Retrieval time can be minutes or up to 12 hours
-    - Glacier Deep Archive. Cheapest tier. Long term storage. Retrieval time is 12 hours to 48 hours.  
-
-### Versions
-
-- Even if you enable the public access to the whole bucket, this applies only to the most current version of the objects. 
-If you have versioning enable, then other version does not have public access.
-- When version is on, you do not delete the object, you mark the object with the "Delete marker" (includes all the versions).
-You can restore the object, deleting the "Delete marker".
-- Once the versioning is enabled, can not be disabled, only can be suspended.
-- How to protect the objects on a bucket of actual deletion?
-  1. Enable versioning.
-  2. Activate MFA.
-
-### S3 Object Lock
-
-You can use S3 Obejct Lock to store objects using a write once, read many (WORM) model. It can help prevent
-objects from being deleted or modified for a fixed amount of time or indefinitely.
-Two models:
-- *Governance Mode*: Only some users have special permissions to overrite or delete an object version or alter its settings.
-- *Compliance Mode*: A protected object version can't be overwritten or deleted by any user during the retention period. 
-
-After the retention perior expires, the object version can be overwritten or deleted unless you also placed a *legal hold* on the object version. It's like a retention period that prevents to overrite or delete the version but it has not time, so you need to delete the legal hold first.
-
-### Glacier Vault Lock:
-Easily deploy and enforce compliance controls for individual S3 Glacier vaults with a vault lock policy. Apply WORM to Gaclier.
 
 ### Projects
 
