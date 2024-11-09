@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 
-from project_hands_on_aws_cdk_book_1.project_hands_on_aws_cdk_book_1_stack import ProjectHandsOnAwsCdkBook1Stack
+from rest_api_with_api_key.rest_api_with_api_key_stack import RestApiWithApiKeyStack
 
 
 app = cdk.App()
-ProjectHandsOnAwsCdkBook1Stack(app, "ProjectHandsOnAwsCdkBook1Stack",
+RestApiWithApiKeyStack(app, "RestApiWithApiKeyStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
