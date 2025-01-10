@@ -1,0 +1,190 @@
+# serializer version: 1
+# name: test_matches_snapshot
+  dict({
+    'Parameters': dict({
+      'BootstrapVersion': dict({
+        'Default': '/cdk-bootstrap/hnb659fds/version',
+        'Description': 'Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]',
+        'Type': 'AWS::SSM::Parameter::Value<String>',
+      }),
+    }),
+    'Resources': dict({
+      'NewOrderProcessorStreamFunction3E6FA205': dict({
+        'DependsOn': list([
+          'NewOrderProcessorStreamFunctionServiceRoleDefaultPolicy29216D80',
+          'NewOrderProcessorStreamFunctionServiceRole20253325',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': '25b58d503bfb33ff98254c84da4577337f983e5b1d5b3939ca6bf9b3fe6f2780.zip',
+          }),
+          'Description': 'Function that process all the new orders of the shop',
+          'FunctionName': 'online-shop-new-order-processor-function',
+          'Handler': 'index.lambda_handler',
+          'MemorySize': 128,
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'NewOrderProcessorStreamFunctionServiceRole20253325',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'python3.11',
+          'Timeout': 300,
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'NewOrderProcessorStreamFunctionDynamoDBEventSourcedynamodbmodelingandstreamsOnLineShopDataStoreTable0D14612CBE037DAB': dict({
+        'Properties': dict({
+          'BatchSize': 100,
+          'EventSourceArn': dict({
+            'Fn::GetAtt': list([
+              'OnLineShopDataStoreTableF588F595',
+              'StreamArn',
+            ]),
+          }),
+          'FunctionName': dict({
+            'Ref': 'NewOrderProcessorStreamFunction3E6FA205',
+          }),
+          'MetricsConfig': dict({
+            'Metrics': list([
+              'EventCount',
+            ]),
+          }),
+          'StartingPosition': 'LATEST',
+        }),
+        'Type': 'AWS::Lambda::EventSourceMapping',
+      }),
+      'NewOrderProcessorStreamFunctionServiceRole20253325': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'NewOrderProcessorStreamFunctionServiceRoleDefaultPolicy29216D80': dict({
+        'Properties': dict({
+          'PolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'dynamodb:ListStreams',
+                'Effect': 'Allow',
+                'Resource': '*',
+              }),
+              dict({
+                'Action': list([
+                  'dynamodb:DescribeStream',
+                  'dynamodb:GetRecords',
+                  'dynamodb:GetShardIterator',
+                ]),
+                'Effect': 'Allow',
+                'Resource': dict({
+                  'Fn::GetAtt': list([
+                    'OnLineShopDataStoreTableF588F595',
+                    'StreamArn',
+                  ]),
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'PolicyName': 'NewOrderProcessorStreamFunctionServiceRoleDefaultPolicy29216D80',
+          'Roles': list([
+            dict({
+              'Ref': 'NewOrderProcessorStreamFunctionServiceRole20253325',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Policy',
+      }),
+      'OnLineShopDataStoreTableF588F595': dict({
+        'DeletionPolicy': 'Retain',
+        'Properties': dict({
+          'AttributeDefinitions': list([
+            dict({
+              'AttributeName': 'PK',
+              'AttributeType': 'S',
+            }),
+            dict({
+              'AttributeName': 'SK',
+              'AttributeType': 'S',
+            }),
+          ]),
+          'KeySchema': list([
+            dict({
+              'AttributeName': 'PK',
+              'KeyType': 'HASH',
+            }),
+            dict({
+              'AttributeName': 'SK',
+              'KeyType': 'RANGE',
+            }),
+          ]),
+          'ProvisionedThroughput': dict({
+            'ReadCapacityUnits': 5,
+            'WriteCapacityUnits': 5,
+          }),
+          'StreamSpecification': dict({
+            'StreamViewType': 'NEW_IMAGE',
+          }),
+          'TableName': 'online-shop-data-store',
+        }),
+        'Type': 'AWS::DynamoDB::Table',
+        'UpdateReplacePolicy': 'Retain',
+      }),
+    }),
+    'Rules': dict({
+      'CheckBootstrapVersion': dict({
+        'Assertions': list([
+          dict({
+            'Assert': dict({
+              'Fn::Not': list([
+                dict({
+                  'Fn::Contains': list([
+                    list([
+                      '1',
+                      '2',
+                      '3',
+                      '4',
+                      '5',
+                    ]),
+                    dict({
+                      'Ref': 'BootstrapVersion',
+                    }),
+                  ]),
+                }),
+              ]),
+            }),
+            'AssertDescription': "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+          }),
+        ]),
+      }),
+    }),
+  })
+# ---
